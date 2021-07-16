@@ -77,20 +77,14 @@
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" name="email" />
                     </div>
-                    {% if messages %}
-                    {% for message in messages %}
-                    {% if 'email' in message.tags %}
-                    <p style=color:red;>{{ message }}</p>
-                    {% endif %}
-                    {% endfor %}
-                    {% endif %}
+                    
                     <div class="form-group">
                         <label for="password">Password:</label>
                         <input type="password" class="form-control" id="password" name="password" />
                     </div>
                     {% if messages %}
                     {% for message in messages %}
-                    {% if 'password' in message.tags %}
+                    {% if 'invalid' in message.tags %}
                     <p style=color:red;>{{ message }}</p>
                     {% endif %}
                     {% endfor %}

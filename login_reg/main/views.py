@@ -34,7 +34,7 @@ def log_user(request):
             request.session['log_user_id'] = logged_user.id
             return redirect('/dashboard')
         else:
-            messages.error(request, 'Invalid Email or Password!')
+            messages.error(request, 'Invalid Email or Password!', extra_tags='invalid')
             return redirect('/')
     messages.error(request, "Email does not exist")
     return redirect('/')
