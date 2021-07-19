@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <h1>Welcome! {{user.first_name}}</h1>
+    <a href="/logout">logout</a>
+    <h3>Add a Favorite Book</h3>
+    <div class="container">
+        <div class="row">
+            <form action="/add_book" method="POST">
+                {% csrf_token %}
+                <div class="form-group-md-6">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                </div>
+                {% if messages %}
+                {% for message in messages %}
+                {% if 'title' in message.tags %}
+                <p style='color:red;'>{{ message }}</p>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                <div class="form-group">
+                    <label for="desc">Description</label>
+                    <textarea name="desc" id="desc" cols="30"></textarea>
+                </div>
+                {% if messages %}
+                {% for message in messages %}
+                {% if 'desc' in message.tags %}
+                <p style='color:red;'>{{ message }}</p>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+                <h1>All Books</h1>
+                {% for each_book in all_books %}
+                <a href="/show_book/{{each_book.id}}">{{each_book.title}}</a>
+                <p>(uploaded by {{each_book.uploaded_by.first_name}} {{each_book.uploaded_by.last_name}} )</p>
+                    {% if user in each_book.users_who_like.all %}
+                        <p>This is one of your Favorites!</p>
+                        {% else %}
+                        <a href="/favorite/{{each_book.id}}">Add to Favorites!</a>
+                    {% endif %}
+                {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
