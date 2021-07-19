@@ -86,11 +86,15 @@ def show(request, book_id):
     return render(request, 'show_book.html', context)
 
 def update(request, book_id):
+    errors = Book.objects.book_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value, extra_tags=key)
+        return redirect(f'/show_book/{book_id}')
     book_to_update= Book.objects.get(id=book_id)
-    book_to_update.title= request.POST['book_title']
-    book_to_update.desc= request.POST['book_desc']
+    book_to_update.title= request.POST['title']
+    book_to_update.desc= request.POST['desc']
     book_to_update.save()
-    # messages.success(request, 'Your book has been updated!')
     return redirect(f'/show_book/{book_id}')
 
 def delete(request, book_id):

@@ -26,12 +26,12 @@
     {% if this_user.id == this_book.uploaded_by.id %}
     <form action="/update/{{this_book.id}}" method="POST">
         {% csrf_token %}
-        <input type="text" value="{{this_book.title}}" name="book_title">
+        <input type="text" value="{{this_book.title}}" name="title">
         <p>Added by {{this_book.uploaded_by.first_name}} {{this_book.uploaded_by.last_name}}</p>
         <p>Added on {{this_book.created_at}}</p>
         <p>Last updated on {{this_book.updated_at}}</p>
         <label for="book_desc"></label>
-        <textarea name="book_desc" id="book_desc" cols="30">{{this_book.desc}}</textarea>
+        <textarea name="desc" id="desc" cols="30">{{this_book.desc}}</textarea>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
     <form action="/delete/{{this_book.id}}" method="POST">
